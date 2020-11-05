@@ -6,6 +6,8 @@ import android.renderscript.ScriptGroup
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         val viewModel = MainViewModel()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.viewmodel = viewModel
@@ -31,17 +34,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.imgUrl.observe(this, Observer {
-            setImg(it)
+            if (it == "error"){
+                Toast.makeText(applicationContext, "Seems like something went wrong...", Toast.LENGTH_SHORT)
+            }else setImg(it)
         })
     }
     fun setImg(url:String){
-        Glide.with(this).load(url).centerCrop().into(binding.imageView)
+        Glide.with(this).load(url).into(binding.imageView)
         GlobalScope.launch(Dispatchers.Main) {
-//            binding.imageView.visibility = View.GONE
             delay(2000)
             binding.progressBar.visibility =View.GONE
-//            binding.imageView.visibility = View.VISIBLE
         }
-
     }
 }
