@@ -6,7 +6,12 @@
     <dialog
         android:id="@+id/dialog"
         android:name="com.example.randomcatimage.Dialog"
-        android:label="Dialog" />
+        android:label="Dialog" >
+        <argument
+            android:name="imgUrl"
+            app:argType="string"
+            android:defaultValue="lol" />
+    </dialog>
     <fragment
         android:id="@+id/imageFragment"
         android:name="com.example.randomcatimage.ImageFragment"

@@ -21,6 +21,7 @@ lateinit var imageBinding: FragmentImageBinding
 class ImageFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        var currentUrl:String =" "
         val viewModel = MainViewModel()
         imageBinding = FragmentImageBinding.inflate(inflater)
         imageBinding.viewmodel = viewModel
@@ -33,11 +34,13 @@ class ImageFragment : Fragment() {
         viewModel.imgUrl.observe(viewLifecycleOwner, Observer {
             if (it == "error"){
 //                Toast.makeText(applicationContext, "Seems like something went wrong...", Toast.LENGTH_SHORT)
-            }else setImg(it)
+            }else {
+                currentUrl = it
+                setImg(it)}
         })
 
         imageBinding.floatingActionButton.setOnClickListener {
-            findNavController().navigate(R.id.action_imageFragment_to_dialog)
+            findNavController().navigate(ImageFragmentDirections.actionImageFragmentToDialog(currentUrl))
         }
 
         return imageBinding.root
