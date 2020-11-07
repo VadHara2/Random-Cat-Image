@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.randomcatimage.databinding.ActivityMainBinding
 import com.example.randomcatimage.databinding.FragmentImageBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -33,7 +31,7 @@ class ImageFragment : Fragment() {
 
         viewModel.imgUrl.observe(viewLifecycleOwner, Observer {
             if (it == "error"){
-//                Toast.makeText(applicationContext, "Seems like something went wrong...", Toast.LENGTH_SHORT)
+                Toast.makeText(activity, "Seems like something went wrong...", Toast.LENGTH_SHORT)
             }else {
                 currentUrl = it
                 setImg(it)}
@@ -51,6 +49,5 @@ class ImageFragment : Fragment() {
             delay(2000)
             imageBinding.progressBar.visibility =View.GONE
         }
-//        findNavController().navigate(R.id.action_imageFragment_to_dialog)
     }
 }
